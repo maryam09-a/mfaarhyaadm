@@ -12,17 +12,16 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(session({
-  secret: process.env.SESSION_SECRET || "change-this-local-demo-secret",
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
     sameSite: "lax",
-    secure: false,
+    secure: process.env.NODE_ENV === "production",
     maxAge: 1000 * 60 * 60
   }
 }));
-
 
 app.post("/api/signup", (req, res) => {
   const { username, email, password } = req.body;
@@ -789,6 +788,8 @@ app.get("/api/my-packages", (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log("mfaarhyaadm running at http://localhost:" + PORT);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log("mfaarhyaadm running on port " + PORT);
 });
