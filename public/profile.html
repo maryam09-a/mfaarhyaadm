@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Profile | mfaarhyaadm</title>
+
+  <style>
+   
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #080816;
+  --panel: rgba(22, 22, 48, 0.88);
+  --purple: #a855f7;
+  --blue: #38bdf8;
+  --text: #f5f3ff;
+  --muted: #aaa8ca;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 24px;
+  font-family: Arial, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at top left, #30205e 0%, transparent 45%),
+    radial-gradient(ellipse at bottom right, #102e60 0%, transparent 45%),
+    var(--bg);
+}
+
+main {
+  max-width: 650px;
+  margin: 45px auto;
+  animation: appear 0.7s ease both;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  padding: 30px;
+  border: 1px solid rgba(168, 85, 247, 0.65);
+  border-radius: 22px;
+  background: var(--panel);
+  box-shadow:
+    0 0 24px rgba(168, 85, 247, 0.15),
+    inset 0 0 25px rgba(56, 189, 248, 0.04);
+  backdrop-filter: blur(14px);
+}
+
+h1, h2 {
+  color: #d8b4fe;
+  text-shadow: 0 0 16px rgba(168, 85, 247, 0.45);
+}
+
+h1 {
+  font-size: clamp(28px, 5vw, 38px);
+}
+
+.avatar {
+  width: 82px;
+  height: 82px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 36px;
+  background: linear-gradient(135deg, #9333ea, #2563eb);
+  border: 2px solid #c084fc;
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.5);
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+  overflow-wrap: anywhere;
+}
+
+.label {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.detail strong {
+  color: #fff;
+  font-size: 16px;
+}
+
+#status {
+  color: #67e8f9;
+}
+
+button {
+  padding: 12px 18px;
+  margin: 18px 8px 0 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  background: linear-gradient(110deg, #9333ea, #4f46e5);
+  box-shadow: 0 0 16px rgba(147, 51, 234, 0.25);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.4);
+}
+
+a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-shadow: 0 0 12px var(--blue);
+}
+
+#message {
+  color: #67e8f9;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 500px) {
+  body {
+    padding: 14px;
+  }
+
+  main {
+    margin: 18px auto;
+  }
+
+  .card {
+    padding: 21px;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+<main>
+  <section class="card">
+    <div class="avatar">👤</div>
+    <h1>My Profile</h1>
+    <p id="message">Loading profile...</p>
+
+    <div id="profile-details" hidden>
+      <div class="detail">
+        <span class="label">Username:</span>
+        <strong id="username"></strong>
+      </div>
+
+      <div class="detail">
+        <span class="label">Email:</span>
+        <strong id="email"></strong>
+      </div>
+
+      <div class="detail">
+        <span class="label">Account Status:</span>
+        <strong id="status"></strong>
+      </div>
+
+      <div class="detail">
+        <span class="label">Member Since:</span>
+        <strong id="created"></strong>
+      </div>
+
+      <h2>Demo Wallet</h2>
+      <div class="detail">
+        Balance: <strong id="balance">Loading...</strong>
+      </div>
+    </div>
+
+    <button id="back" type="button">Back to Website</button>
+    <p><a href="/admin.html">Admin Panel</a></p>
+  </section>
+</main>
+
+<script>
+async function loadProfile() {
+  const message = document.getElementById("message");
+
+  try {
+    const response = await fetch("/api/me");
+
+    if (response.status === 401) {
+      message.textContent = "Please login first.";
+      return;
+    }
+
+    if (!response.ok) {
+      throw new Error("Profile load nahi ho saka.");
+    }
+
+    const data = await response.json();
+    const user = data.user;
+
+    document.getElementById("username").textContent = user.username;
+    document.getElementById("email").textContent = user.email;
+    document.getElementById("status").textContent = user.status;
+    document.getElementById("created").textContent = user.created_at;
+
+    document.getElementById("profile-details").hidden = false;
+    message.textContent = "Profile loaded successfully.";
+
+    const walletResponse = await fetch("/api/wallet");
+
+    if (walletResponse.ok) {
+      const wallet = await walletResponse.json();
+      document.getElementById("balance").textContent =
+        "PKR " + wallet.balance_pkr + " (Demo)";
+    } else {
+      document.getElementById("balance").textContent =
+        "Unavailable";
+    }
+  } catch (error) {
+    message.textContent = error.message;
+  }
+}
+
+document.getElementById("back").addEventListener("click", () => {
+  window.location.href = "/";
+});
+
+loadProfile();
+</script>
+</body>
+</html>

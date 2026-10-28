@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>mfaarhyaadm | Admin Panel</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: Arial, sans-serif;
+      background: #0b0b18;
+      color: white;
+    }
+
+    main { max-width: 950px; margin: auto; }
+
+    h1, h2 { color: #b69aff; }
+
+    .card {
+      background: #17172b;
+      border: 1px solid #373052;
+      border-radius: 14px;
+      padding: 20px;
+      margin: 18px 0;
+    }
+
+    input, textarea {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      background: #101020;
+      color: white;
+      border: 1px solid #554582;
+      border-radius: 8px;
+    }
+
+    button {
+      padding: 11px 16px;
+      margin: 5px;
+      background: #8257ed;
+      color: white;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .item {
+      padding: 12px 0;
+      border-bottom: 1px solid #373052;
+      overflow-wrap: anywhere;
+    }
+
+    #message { color: #b69aff; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>🛡️ Admin Dashboard</h1>
+  <p>Manage your mfaarhyaadm website.</p>
+  <p id="message">Checking admin access...</p>
+
+  <section class="card">
+    <h2>Website Statistics</h2>
+    <p>Total Users: <strong id="users">—</strong></p>
+    <p>Total Tasks: <strong id="tasks">—</strong></p>
+    <p>Completed Tasks: <strong id="completed">—</strong></p>
+    <button id="refresh">Refresh Statistics</button>
+  </section>
+
+  <section class="card">
+    <h2>Add New Task</h2>
+    <form id="task-form">
+      <input name="title" placeholder="Task title" minlength="3"
+        maxlength="100" required>
+      <textarea name="description" placeholder="Task description"
+        minlength="5" maxlength="500" required></textarea>
+      <input name="reward_pkr" type="number" min="0" max="10000"
+        step="1" placeholder="Demo reward in PKR" required>
+      <button type="submit">Add Task</button>
+    </form>
+  </section>
+
+<section class="card">
+  <h2>Manage Tasks</h2>
+  <button id="load-tasks">Refresh Tasks</button>
+  <p id="task-message"></p>
+  <div id="admin-task-list"></div>
+</section>
+
+  <section class="card">
+    <h2>Registered Users</h2>
+    <button id="load-users">Load Users</button>
+    <div id="user-list"></div>
+  </section>
+
+  <p><a href="/" style="color:#b69aff">Back to Website</a></p>
+</main>
+
+<script>
+
+const message = document.getElementById("message");
+const adminTaskList = document.getElementById("admin-task-list");
+const taskMessage = document.getElementById("task-message");
+
+async function request(url, options = {}) {
+  const response = await fetch(url, {
+    credentials: "same-origin",
+    ...options,
+    headers: {
+      ...(options.headers || {}),
+      ...(options.body ? { "Content-Type": "application/json" } : {})
+    }
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Request failed");
+  }
+
+  return data;
+}
+
+async function loadStats() {
+  try {
+    const data = await request("/api/admin/stats");
+
+    document.getElementById("users").textContent = data.users;
+    document.getElementById("tasks").textContent = data.tasks;
+    document.getElementById("completed").textContent =
+      data.completedTasks;
+
+    message.textContent = "Admin access verified.";
+  } catch (error) {
+    message.textContent = error.message;
+  }
+}
+
+async function loadAdminTasks() {
+  adminTaskList.textContent = "Loading tasks...";
+  taskMessage.textContent = "";
+
+  try {
+    const data = await request("/api/admin/tasks");
+    adminTaskList.replaceChildren();
+
+    data.tasks.forEach(task => {
+      const card = document.createElement("div");
+      card.className = "item";
+
+      const title = document.createElement("h3");
+      title.textContent = task.title;
+
+      const description = document.createElement("p");
+      description.textContent = task.description;
+
+      const details = document.createElement("p");
+      details.textContent =
+        "Demo reward: PKR " + task.reward_pkr +
+        " | Completed: " + task.completion_count +
+        " | Status: " + (task.is_active ? "Active" : "Inactive");
+
+      const editButton = document.createElement("button");
+      editButton.textContent = "Edit Task";
+
+      editButton.addEventListener("click", async () => {
+        const titleValue = prompt("Task title:", task.title);
+        if (titleValue === null) return;
+
+        const descriptionValue = prompt(
+          "Task description:", task.description
+        );
+        if (descriptionValue === null) return;
+
+        const rewardValue = prompt(
+          "Demo reward in PKR:", String(task.reward_pkr)
+        );
+        if (rewardValue === null) return;
+
+        const reward = Number(rewardValue);
+
+        if (
+          !titleValue.trim() ||
+          !descriptionValue.trim() ||
+          !Number.isSafeInteger(reward) ||
+          reward < 0 ||
+          reward > 10000
+        ) {
+          taskMessage.textContent = "Please enter valid task details.";
+          return;
+        }
+
+        try {
+          const result = await request(
+            "/api/admin/tasks/" + task.id,
+            {
+              method: "PATCH",
+              body: JSON.stringify({
+                title: titleValue.trim(),
+                description: descriptionValue.trim(),
+                reward_pkr: reward,
+                is_active: task.is_active
+              })
+            }
+          );
+
+          taskMessage.textContent = result.message;
+          await loadAdminTasks();
+          await loadStats();
+        } catch (error) {
+          taskMessage.textContent = error.message;
+        }
+      });
+
+      const toggleButton = document.createElement("button");
+      toggleButton.textContent = task.is_active
+        ? "Deactivate Task"
+        : "Activate Task";
+
+      toggleButton.addEventListener("click", async () => {
+        try {
+          const result = await request(
+            "/api/admin/tasks/" + task.id,
+            {
+              method: "PATCH",
+              body: JSON.stringify({
+                title: task.title,
+                description: task.description,
+                reward_pkr: task.reward_pkr,
+                is_active: task.is_active ? 0 : 1
+              })
+            }
+          );
+
+          taskMessage.textContent = result.message;
+          await loadAdminTasks();
+          await loadStats();
+        } catch (error) {
+          taskMessage.textContent = error.message;
+        }
+      });
+
+      card.append(
+        title, description, details, editButton, toggleButton
+      );
+
+      adminTaskList.appendChild(card);
+    });
+
+    if (data.tasks.length === 0) {
+      adminTaskList.textContent = "Abhi koi task nahi hai.";
+    }
+  } catch (error) {
+    adminTaskList.textContent = "";
+    taskMessage.textContent = error.message;
+  }
+}
+
+document.getElementById("refresh").addEventListener("click", loadStats);
+
+document.getElementById("load-tasks").addEventListener(
+  "click",
+  loadAdminTasks
+);
+
+document.getElementById("task-form").addEventListener(
+  "submit",
+  async event => {
+    event.preventDefault();
+
+    const form = new FormData(event.currentTarget);
+
+    const data = {
+      title: form.get("title").trim(),
+      description: form.get("description").trim(),
+      reward_pkr: Number(form.get("reward_pkr"))
+    };
+
+    try {
+      const result = await request("/api/admin/tasks", {
+        method: "POST",
+        body: JSON.stringify(data)
+      });
+
+      message.textContent = result.message;
+      event.currentTarget.reset();
+
+      await loadAdminTasks();
+      await loadStats();
+    } catch (error) {
+      message.textContent = error.message;
+    }
+  }
+);
+
+
+document.getElementById("load-users").addEventListener(
+  "click",
+  async () => {
+    const list = document.getElementById("user-list");
+    list.textContent = "Loading users...";
+
+    try {
+      const data = await request("/api/admin/users");
+      list.replaceChildren();
+
+      data.users.forEach(user => {
+        const item = document.createElement("div");
+        item.className = "item";
+
+        const details = document.createElement("p");
+        details.textContent =
+          user.username + " — " + user.email +
+          " — Role: " + user.role +
+          " — Status: " + (user.is_blocked ? "Blocked" : "Active");
+
+        item.appendChild(details);
+
+        if (user.role !== "admin") {
+          const button = document.createElement("button");
+
+          button.textContent = user.is_blocked ? "Unblock User" : "Block User";
+
+          button.addEventListener("click", async () => {
+            button.disabled = true;
+
+            try {
+              const result = await request(
+                "/api/admin/users/" + user.id + "/block",
+                {
+                  method: "PATCH",
+                  body: JSON.stringify({
+                    blocked: !user.is_blocked
+                  })
+                }
+              );
+
+              list.dataset.message = result.message;
+              await document.getElementById("load-users").click();
+            } catch (error) {
+              details.textContent += " — " + error.message;
+              button.disabled = false;
+            }
+          });
+
+          item.appendChild(button);
+        }
+
+        list.appendChild(item);
+      });
+
+      if (data.users.length === 0) {
+        list.textContent = "No users found.";
+      }
+    } catch (error) {
+      list.textContent = error.message;
+    }
+  }
+);
+
+
+loadStats();
+loadAdminTasks();
+
+</script>
+</body>
+</html>

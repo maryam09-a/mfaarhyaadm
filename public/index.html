@@ -1,0 +1,1402 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mfaarhyaadm | Earn Online</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    
+#auth-section {
+  margin-bottom: 22px;
+}
+
+#auth-section input {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #554582;
+  border-radius: 8px;
+  background: #101020;
+  color: white;
+}
+
+#auth-section input:focus {
+  outline: 2px solid #8257ed;
+}
+
+#auth-message {
+  color: #b69aff;
+}
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b0b18;
+      color: white;
+    }
+
+    header {
+      padding: 22px;
+      background: #15132b;
+      border-bottom: 1px solid #39305d;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #b69aff;
+    }
+
+    header p {
+      color: #9eabff;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 24px;
+    }
+
+    .welcome {
+      padding: 25px;
+      border-radius: 16px;
+      background: linear-gradient(120deg, #30205f, #132c65);
+      box-shadow: 0 0 22px #6044bb44;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .card {
+      padding: 22px;
+      background: #17172b;
+      border: 1px solid #373052;
+      border-radius: 14px;
+    }
+
+    .card h3 {
+      color: #b69aff;
+    }
+
+    .card p {
+      color: #c4c5db;
+    }
+
+    button {
+      padding: 11px 15px;
+      border: 0;
+      border-radius: 8px;
+      background: #8257ed;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #6840d5;
+    }
+
+    footer {
+      padding: 25px;
+      text-align: center;
+      color: #9b9bb4;
+    }
+    
+.wallet-card {
+  background: linear-gradient(135deg, #241044, #10234a);
+  border: 1px solid #8257ed;
+  border-radius: 16px;
+  padding: 22px;
+  margin: 22px 0;
+  box-shadow: 0 0 18px #8257ed33;
+}
+
+.wallet-card h2 {
+  color: #c5aaff;
+}
+
+#wallet-balance {
+  color: #70f0ff;
+  font-size: 1.4em;
+}
+
+#wallet-message {
+  color: #c4c5db;
+}
+[hidden] {
+  display: none !important;
+}
+
+/* ===== MF AARHYAADM DASHBOARD REDESIGN ===== */
+
+body {
+  background:
+    radial-gradient(ellipse at top left, #171337 0%, transparent 45%),
+    #090914;
+  color: #f4f2ff;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+body > header {
+  padding: 24px clamp(18px, 4vw, 55px);
+  background: rgba(17, 15, 37, 0.96);
+  border-bottom: 1px solid #33275a;
+}
+
+body > header h1 {
+  font-size: clamp(24px, 3vw, 34px);
+  letter-spacing: -0.7px;
+}
+
+body > header p {
+  margin-bottom: 0;
+}
+
+main {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: clamp(16px, 3vw, 38px);
+}
+
+#dashboard-section {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.dashboard-user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 18px;
+  margin-bottom: 22px;
+  border: 1px solid #302650;
+  border-radius: 14px;
+  background: #121126;
+}
+
+.dashboard-user p {
+  margin: 0;
+  color: #c9bbff;
+  font-weight: 600;
+}
+
+#dashboard-section .welcome {
+  padding: clamp(20px, 3vw, 34px);
+  border: 1px solid #51408a;
+  border-radius: 22px;
+  background: linear-gradient(125deg, #211846, #14264c 75%, #152044);
+  box-shadow: 0 14px 40px #00000030;
+}
+
+#dashboard-section .welcome > h2 {
+  margin-top: 0;
+  font-size: clamp(24px, 3vw, 32px);
+  color: #ffffff;
+}
+
+#dashboard-section .wallet-card {
+  margin: 24px 0 18px;
+  padding: 24px;
+  border: 1px solid #7454ce;
+  border-radius: 17px;
+  background: linear-gradient(125deg, #191533, #111c38);
+  box-shadow: 0 0 24px #8257ed18;
+}
+
+#dashboard-section .wallet-card h1 {
+  font-size: clamp(28px, 4vw, 38px);
+  color: #75efff;
+}
+
+#dashboard-section .wallet-history {
+  margin-top: 25px;
+}
+
+#dashboard-section .cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 20px;
+  margin-top: 24px;
+}
+
+#dashboard-section .cards > .card {
+  min-width: 0;
+  margin: 0;
+  padding: 24px;
+  border: 1px solid #332a55;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #17162e, #10101f);
+  box-shadow: 0 10px 30px #00000020;
+}
+
+#dashboard-section .cards > .card h3 {
+  margin-top: 0;
+  font-size: 19px;
+  color: #c4adff;
+}
+
+#dashboard-section .cards > .card p {
+  line-height: 1.7;
+}
+
+#dashboard-section .cards > .referral-card {
+  grid-column: 1 / -1;
+  background: linear-gradient(145deg, #1b1736, #11172b);
+  border-color: #6550a8;
+}
+
+#dashboard-section .referral-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+#dashboard-section .referral-stat {
+  margin-bottom: 20px;
+}
+
+#dashboard-section .referral-field {
+  margin: 18px 0 10px;
+}
+
+#dashboard-section .referral-field label {
+  display: block;
+  margin-bottom: 7px;
+  color: #c9bded;
+  font-weight: 600;
+}
+
+#dashboard-section .referral-field input {
+  width: 100%;
+  min-height: 44px;
+  font-size: 14px;
+}
+
+#dashboard-section .referral-main-btn {
+  margin: 5px 8px 12px 0;
+}
+
+#dashboard-section .referral-users-section {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #342b52;
+}
+
+#dashboard-section .referral-table-wrapper {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid #332a55;
+  border-radius: 12px;
+}
+
+#dashboard-section .referral-table {
+  min-width: 580px;
+}
+
+#dashboard-section .cards button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+#dashboard-section .cards > .card > button {
+  margin: 5px 6px 5px 0;
+}
+
+#dashboard-section #tasks-list,
+#dashboard-section #history-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+#dashboard-section #tasks-list > .card,
+#dashboard-section #history-list > .card {
+  margin: 0;
+  padding: 16px;
+  border-radius: 12px;
+  background: #111126;
+}
+
+#dashboard-section input {
+  max-width: 100%;
+}
+
+body > footer {
+  margin-top: 35px;
+  border-top: 1px solid #302747;
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  main {
+    padding: 14px;
+  }
+
+  #dashboard-section .cards {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  #dashboard-section .cards > .referral-card {
+    grid-column: auto;
+  }
+
+  #dashboard-section .welcome {
+    padding: 18px;
+  }
+
+  #dashboard-section .wallet-card {
+    padding: 17px;
+  }
+
+  #dashboard-section .cards > .card {
+    padding: 18px;
+  }
+
+  #dashboard-section .referral-header {
+    align-items: flex-start;
+  }
+}
+
+/* ===== MODERN NEON SIDEBAR ===== */
+#dashboard-section {
+  position: relative;
+  padding-left: 255px;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  box-sizing: border-box;
+}
+@media (min-width: 701px) {
+  #dashboard-section {
+    padding-left: 255px;
+  }
+
+  #sidebar-toggle {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  #dashboard-section {
+    padding-left: 0;
+    padding-top: 60px;
+  }
+
+  #modern-sidebar {
+    width: 260px;
+    transform: translateX(-105%);
+    visibility: hidden;
+    transition: transform 0.25s ease, visibility 0.25s ease;
+  }
+
+  #modern-sidebar.sidebar-open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  #sidebar-toggle {
+    display: block;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 1001;
+  }
+}
+#modern-sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  width: 235px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 15px;
+  overflow-y: auto;
+  background: linear-gradient(180deg, #15132c, #0d0d1b);
+  border-right: 1px solid #39305d;
+  box-shadow: 8px 0 35px #00000025;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 4px 7px 25px;
+  border-bottom: 1px solid #302747;
+}
+
+.brand-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 13px;
+  font-size: 23px;
+  background: linear-gradient(135deg, #8057ff, #3478f6);
+  box-shadow: 0 0 20px #8057ff35;
+}
+
+.sidebar-brand h2 {
+  margin: 0;
+  font-size: 16px;
+  color: #e1d5ff;
+}
+
+.sidebar-brand small,
+.sidebar-status small {
+  display: block;
+  font-size: 10px;
+  color: #9995ba;
+}
+
+.sidebar-label {
+  margin: 24px 10px 10px;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  color: #8883aa;
+}
+
+.sidebar-nav {
+  display: grid;
+  gap: 7px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 13px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  color: #c4c1df;
+  text-decoration: none;
+  font-size: 13px;
+  transition: 0.2s ease;
+}
+
+.sidebar-link span {
+  width: 22px;
+  text-align: center;
+  font-size: 19px;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+  color: white;
+  background: linear-gradient(100deg, #6541c633, #3478f622);
+  border-color: #6c50b855;
+}
+
+.sidebar-link.active {
+  box-shadow: inset 3px 0 #9c7bff;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.sidebar-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 10px;
+  border: 1px solid #302747;
+  border-radius: 12px;
+  background: #17152b;
+}
+
+.sidebar-status strong {
+  font-size: 12px;
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #6ee7b7;
+  box-shadow: 0 0 10px #6ee7b766;
+}
+
+#sidebar-logout {
+  width: 100%;
+  margin-top: 12px;
+  background: #281a35;
+  border: 1px solid #57315e;
+}
+
+#sidebar-logout:hover {
+  background: #492346;
+}
+
+#sidebar-toggle {
+  display: none;
+}
+
+@media (min-width: 701px) {
+  #dashboard-section {
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  #dashboard-section {
+    padding-left: 0;
+    padding-top: 55px;
+  }
+
+  #modern-sidebar {
+    width: 260px;
+    transform: translateX(-105%);
+    visibility: hidden;
+    transition: transform 0.25s ease, visibility 0.25s ease;
+  }
+
+  #modern-sidebar.sidebar-open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  #sidebar-toggle {
+    display: block;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 1001;
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+    border: 1px solid #554582;
+    background: #20183d;
+  }
+}
+
+/* ===== PREMIUM NEON GLASS CARDS ===== */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 22px;
+  align-items: stretch;
+}
+
+.cards > section,
+.cards > .card {
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  border: 1px solid rgba(145, 105, 255, 0.35);
+  border-radius: 18px;
+  background: linear-gradient(
+    145deg,
+    rgba(35, 30, 75, 0.95),
+    rgba(15, 20, 48, 0.97)
+  );
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.cards > section:hover,
+.cards > .card:hover {
+  transform: translateY(-6px);
+  border-color: #9470ff;
+  box-shadow:
+    0 12px 32px rgba(91, 67, 220, 0.22),
+    0 0 15px rgba(117, 83, 255, 0.12);
+}
+
+.cards > section h2,
+.cards > .card h2 {
+  color: #c9b8ff;
+  margin-top: 0;
+}
+
+.cards button {
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.cards button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.12);
+}
+
+.cards button:focus-visible {
+  outline: 2px solid #9f8bff;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cards > section,
+  .cards > .card,
+  .cards button {
+    transition: none;
+  }
+
+  .cards > section:hover,
+  .cards > .card:hover,
+  .cards button:hover {
+    transform: none;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>⚡ mfaarhyaadm</h1>
+    <p>Your Tasks. Your Rewards. Your Progress.</p>
+  </header>
+
+  <main>
+    
+    <section class="card" id="auth-section">
+      <h2>Account Access</h2>
+
+      <h3>Create Account</h3>
+      <form id="signup-form">
+        <input name="username" placeholder="Username" required minlength="3" maxlength="30">
+        <input name="email" type="email" placeholder="Email address" required>
+        <input name="password" type="password" placeholder="Password (8+ characters)" required minlength="8" maxlength="72">
+        <button type="submit">Sign Up</button>
+      </form>
+
+      <hr>
+
+      <h3>Already have an account?</h3>
+      <form id="login-form">
+        <input name="email" type="email" placeholder="Email address" required>
+        <input name="password" type="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+
+      <p id="auth-message" role="status"></p>
+      
+    </section>
+<div id="dashboard-section" hidden>
+    
+<aside class="modern-sidebar" id="modern-sidebar">
+  <div class="sidebar-brand">
+    <span class="brand-icon">⚡</span>
+    <div>
+      <h2>mfaarhyaadm</h2>
+      <small>REWARDS DASHBOARD</small>
+    </div>
+  </div>
+
+  <p class="sidebar-label">MAIN MENU</p>
+
+  <nav class="sidebar-nav">
+    <a href="#dashboard-section" class="sidebar-link active" data-nav="dashboard">
+      <span>⌂</span> Dashboard
+    </a>
+
+    <a href="#tasks-list" class="sidebar-link" data-nav="tasks">
+      <span>▤</span> Tasks & Rewards
+    </a>
+
+    <a href="#wallet-balance" class="sidebar-link" data-nav="wallet">
+      <span>▣</span> My Wallet
+    </a>
+
+    <a href="#referral-link" class="sidebar-link" data-nav="referrals">
+      <span>♧</span> My Referrals
+    </a>
+
+    <a href="#history-list" class="sidebar-link" data-nav="history">
+      <span>◷</span> Transactions
+    </a>
+  </nav>
+
+  <p class="sidebar-label">ACCOUNT</p>
+
+  <nav class="sidebar-nav">
+    <a href="/profile.html" class="sidebar-link">
+      <span>◉</span> My Profile
+    </a>
+
+    <a href="/admin.html" class="sidebar-link">
+      <span>⚙</span> Admin Panel
+    </a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <div class="sidebar-status">
+      <span class="status-dot"></span>
+      <div>
+        <strong>Demo Mode</strong>
+        <small>Practice dashboard</small>
+      </div>
+    </div>
+
+    <button type="button" id="sidebar-logout">↗ Logout</button>
+  </div>
+</aside>
+
+<button type="button" id="sidebar-toggle" aria-label="Open navigation menu"
+  aria-controls="modern-sidebar" aria-expanded="false">
+  ☰
+</button>
+
+  <div class="dashboard-user">
+    <p id="logged-in-user"></p>
+    <button id="logout-button" type="button">Logout</button>
+  </div>
+    <section class="welcome">
+      <h2>Welcome to mfaarhyaadm!</h2>
+      <p>Complete tasks and track your rewards.</p>
+      
+<div class="wallet-card">
+  <h2>💳 My Demo Wallet</h2>
+  <p>Available Demo Balance</p>
+  <h1>PKR <span id="wallet-balance">0</span></h1>
+  <p id="wallet-message">Login to view your demo balance.</p>
+  <button id="refresh-wallet" type="button">Refresh Wallet</button>
+  <small>Demo balance only — no real money.</small>
+</div>
+
+<section class="wallet-history">
+  <h2>📜 Transaction History</h2>
+  <button id="refresh-history" type="button">
+    Refresh History
+  </button>
+  <p id="history-message">
+    Login to view transactions.
+  </p>
+  <div id="history-list"></div>
+</section>
+
+    </section>
+
+    <section class="cards">
+      <div class="card">
+        <h3>📋 Tasks & Rewards</h3>
+        <p>Explore available tasks.</p>
+        <button onclick="loadTasks()">View Tasks</button>
+        <div id="tasks-list"></div>
+        <p id="tasks-message"></p>
+      </div>
+
+    
+<div class="card referral-card">
+  <div class="referral-header">
+    <div class="referral-icon">👥</div>
+    <div>
+      <h3>My Referrals</h3>
+      <p>Share your link and invite friends.</p>
+    </div>
+  </div>
+
+  <div class="referral-stat">
+    <div>
+      <h2 id="referral-count">Total referrals: 0</h2>
+      <p>Successful Referrals</p>
+    </div>
+  </div>
+
+<div class="referral-field">
+  <label for="referral-code">Your Referral Code</label>
+  <input
+    type="text"
+    id="referral-code"
+    readonly
+    placeholder="Loading referral code..."
+  >
+</div>
+
+<button
+  type="button"
+  id="copy-code-btn"
+  class="referral-main-btn"
+>
+  Copy Referral Code
+</button>
+
+  <div class="referral-field">
+    <label for="referral-link">Your Referral Link</label>
+    <input
+      type="text"
+      id="referral-link"
+      readonly
+      placeholder="Loading referral link..."
+    >
+  </div>
+
+    <button type="button" id="copy-referral-btn" class="referral-main-btn">
+    Copy Referral Link
+  </button>
+
+<div class="referral-users-section">
+  <h3>My Referral Users</h3>
+  <p>Users who joined through your referral link.</p>
+
+  <div class="referral-table-wrapper">
+    <table class="referral-table">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Joining Date</th>
+        </tr>
+      </thead>
+      <tbody id="referral-users-list">
+        <tr>
+          <td colspan="3">Loading referral users...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+ 
+
+  <p id="referral-message" role="status"></p>
+
+  <div class="referral-note">
+    <small>ℹ️ Referral tracking only. Rewards are not guaranteed.</small>
+  </div>
+</div>
+ 
+  <div class="card">
+        <h3>💳 Deposit</h3>
+        <p>Easypaisa and JazzCash payment requests.</p>
+        <button onclick="alert('Payment system is not active yet.')">
+          Deposit
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>💸 Withdraw</h3>
+        <p>View withdrawal options.</p>
+        <button onclick="alert('Withdrawal system is not active yet.')">
+          Withdraw
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>🛡️ Admin Panel</h3>
+        <p>Manage tasks and requests securely.</p>
+        
+       
+        <button onclick="window.location.href='/profile.html'">
+           My Profile
+        </button>
+
+        <button onclick="window.location.href='/admin.html'">
+           Admin
+        </button>
+
+
+      </div>
+        </section>
+
+    <!-- DEMO PACKAGES SECTION -->
+
+    <!-- DEMO PACKAGES SECTION -->
+    <section class="packages-section" id="packages">
+      <div class="packages-heading">
+        <p class="packages-label">MF AARHYAADM</p>
+        <h2>Choose Your Demo Package</h2>
+        <p>Explore packages in demo mode. No payment required.</p>
+      </div>
+
+      <div id="packages-container" class="packages-grid">
+        <p>Loading demo packages...</p>
+      </div>
+
+      <p id="packages-message" class="packages-message" role="status"></p>
+    </section>
+
+    </div>
+
+<script>
+async function loadDemoPackages() {
+  const container = document.getElementById("packages-container");
+  const message = document.getElementById("packages-message");
+
+  try {
+    const response = await fetch("/api/packages");
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error("Packages load nahi ho sake.");
+    }
+
+    if (!data.packages.length) {
+      container.textContent = "Abhi koi demo package available nahi.";
+      return;
+    }
+
+    container.replaceChildren();
+
+    data.packages.forEach((pkg, index) => {
+      const card = document.createElement("article");
+      card.className = "demo-package-card";
+
+      const label = document.createElement("p");
+      label.className = "demo-package-label";
+      label.textContent = index === 1 ? "POPULAR DEMO" : "DEMO PACKAGE";
+
+      const title = document.createElement("h3");
+      title.textContent = pkg.name;
+
+      const price = document.createElement("p");
+      price.className = "demo-package-price";
+      price.textContent = "Rs. " + Number(pkg.price_pkr).toLocaleString("en-PK");
+
+      const description = document.createElement("p");
+      description.textContent = pkg.description;
+
+      const button = document.createElement("button");
+      button.className = "demo-package-button";
+      button.textContent = "Activate Demo";
+
+      button.addEventListener("click", async () => {
+        button.disabled = true;
+        message.textContent = "Processing demo activation...";
+
+        try {
+          const result = await fetch("/api/packages/activate-demo", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ packageId: pkg.id })
+          });
+
+          const resultData = await result.json();
+
+          if (!result.ok || !resultData.success) {
+            throw new Error(resultData.message || "Activation failed.");
+          }
+
+          message.textContent =
+            resultData.message +
+            (resultData.commission
+              ? " Demo referral commission: Rs. " +
+                resultData.commission.amountPkr +
+                " (not withdrawable)."
+              : "");
+        } catch (error) {
+          message.textContent = error.message;
+        } finally {
+          button.disabled = false;
+        }
+      });
+
+      card.append(label, title, price, description, button);
+      container.appendChild(card);
+    });
+  } catch (error) {
+    container.textContent = error.message;
+  }
+}
+
+loadDemoPackages();
+</script>
+
+  </main>
+
+  <footer>
+    © 2026 mfaarhyaadm | Demo version
+  </footer>
+  
+<script>
+    
+
+const signupForm = document.getElementById("signup-form");
+const loginForm = document.getElementById("login-form");
+const message = document.getElementById("auth-message");
+const loggedInUser = document.getElementById("logged-in-user");
+const logoutButton = document.getElementById("logout-button");
+
+async function apiRequest(url, data = {}, method = "POST") {
+  const response = await fetch(url, {
+    method,
+    headers: { "Content-Type": "application/json" },
+    credentials: "same-origin",
+    ...(method !== "GET" ? { body: JSON.stringify(data) } : {})
+  });
+
+  const result = await response.json();
+  if (!response.ok) throw new Error(result.message || "Request failed");
+  return result;
+}
+
+function showUser(user) {
+  document.getElementById("auth-section").hidden = true;
+  document.getElementById("dashboard-section").hidden = false;
+
+  loggedInUser.textContent = "Logged in as: " + user.username;
+  logoutButton.hidden = false;
+  message.textContent = "Account access successful!";
+
+  loadWallet();
+  loadReferral();
+}
+
+
+async function loadReferral() {
+  const linkInput = document.getElementById("referral-link");
+  const codeInput = document.getElementById("referral-code");
+  const countText = document.getElementById("referral-count");
+  const referralMessage = document.getElementById("referral-message");
+  const copyLinkButton = document.getElementById("copy-referral-btn");
+  const copyCodeButton = document.getElementById("copy-code-btn");
+
+  async function copyText(text, successMessage) {
+    try {
+      await navigator.clipboard.writeText(text);
+      referralMessage.textContent = successMessage;
+    } catch (error) {
+      const tempInput = document.createElement("textarea");
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+
+      const copied = document.execCommand("copy");
+      tempInput.remove();
+
+      referralMessage.textContent = copied
+        ? successMessage
+        : "Text select karke manually copy kar lo.";
+    }
+  }
+
+  try {
+    const data = await apiRequest("/api/referral", {}, "GET");
+
+    linkInput.value = data.referralLink;
+    codeInput.value = data.referralCode;
+    countText.textContent = "Total referrals: " + data.totalReferrals;
+     
+const usersList = document.getElementById("referral-users-list");
+usersList.replaceChildren();
+
+if (data.referrals && data.referrals.length > 0) {
+  data.referrals.forEach((user) => {
+    const row = document.createElement("tr");
+
+    const usernameCell = document.createElement("td");
+    usernameCell.textContent = user.username || "N/A";
+
+    const emailCell = document.createElement("td");
+    emailCell.textContent = user.email || "N/A";
+
+    const dateCell = document.createElement("td");
+    const date = user.created_at
+      ? new Date(user.created_at)
+      : null;
+
+    dateCell.textContent =
+      date && !Number.isNaN(date.getTime())
+        ? date.toLocaleDateString()
+        : "N/A";
+
+    row.append(usernameCell, emailCell, dateCell);
+    usersList.appendChild(row);
+  });
+} else {
+  const row = document.createElement("tr");
+  const cell = document.createElement("td");
+
+  cell.colSpan = 3;
+  cell.textContent = "Abhi koi referral user nahi hai.";
+
+  row.appendChild(cell);
+  usersList.appendChild(row);
+}
+
+    referralMessage.textContent = "";
+
+    copyLinkButton.onclick = function () {
+      copyText(linkInput.value, "Referral link copied!");
+    };
+
+    copyCodeButton.onclick = function () {
+      copyText(codeInput.value, "Referral code copied!");
+    };
+  } catch (error) {
+    referralMessage.textContent =
+      "Referral details load nahi huin. Refresh karke try karo.";
+  }
+}
+
+
+async function loadWallet() {
+  const balance = document.getElementById("wallet-balance");
+  const walletMessage = document.getElementById("wallet-message");
+
+  try {
+    const data = await apiRequest("/api/wallet", {}, "GET");
+    balance.textContent = data.balance_pkr;
+    walletMessage.textContent = "Demo wallet updated successfully.";
+  } catch (error) {
+    walletMessage.textContent = error.message;
+  }
+}
+
+document.getElementById("refresh-wallet").addEventListener(
+  "click",
+  loadWallet
+);
+
+signupForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  message.textContent = "Creating account...";
+
+const data = Object.fromEntries(new FormData(signupForm));
+
+// Referral link se code lena
+const params = new URLSearchParams(window.location.search);
+const referralCode = params.get("ref");
+
+if (referralCode) {
+  data.referralCode = referralCode;
+}
+
+try {
+  const result = await apiRequest("/api/signup", data);
+  showUser(result.user);
+  signupForm.reset();
+} catch (error) {
+  message.textContent = error.message;
+}
+});
+
+
+loginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  message.textContent = "Logging in...";
+
+  const data = Object.fromEntries(new FormData(loginForm));
+
+  try {
+    const result = await apiRequest("/api/login", data);
+    showUser(result.user);
+    loginForm.reset();
+  } catch (error) {
+    message.textContent = error.message;
+  }
+});
+
+logoutButton.addEventListener("click", async () => {
+  try {
+    const result = await apiRequest("/api/logout");
+    message.textContent = result.message;
+    loggedInUser.textContent = "";
+    logoutButton.hidden = true;
+    document.getElementById("dashboard-section").hidden = true;
+    document.getElementById("auth-section").hidden = false;
+  } catch (error) {
+    message.textContent = error.message;
+  }
+});
+
+
+async function checkLogin() {
+  try {
+    const response = await fetch("/api/me", {
+      credentials: "same-origin"
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      showUser(result.user);
+    } else {
+     document.getElementById("auth-section").hidden = false;
+     document.getElementById("dashboard-section").hidden = true;
+
+     loggedInUser.textContent = "";
+     logoutButton.hidden = true;
+      message.textContent = "";
+    }
+  } catch (error) {
+    message.textContent = "Server se connection nahi ho saka.";
+  }
+}
+
+checkLogin();
+
+
+const sidebar = document.getElementById("modern-sidebar");
+const sidebarToggle = document.getElementById("sidebar-toggle");
+
+sidebarToggle.addEventListener("click", () => {
+  const isOpen = sidebar.classList.toggle("sidebar-open");
+  sidebarToggle.setAttribute("aria-expanded", String(isOpen));
+});
+
+document.querySelectorAll(".sidebar-link").forEach((link) => {
+  link.addEventListener("click", () => {
+    document.querySelectorAll(".sidebar-link").forEach((item) => {
+      item.classList.remove("active");
+    });
+
+    link.classList.add("active");
+    sidebar.classList.remove("sidebar-open");
+    sidebarToggle.setAttribute("aria-expanded", "false");
+
+    if (link.getAttribute("href") === "#tasks-list") {
+      loadTasks();
+    }
+
+    if (link.getAttribute("href") === "#history-list") {
+      loadHistory();
+    }
+  });
+});
+
+document.getElementById("sidebar-logout").addEventListener("click", () => {
+  logoutButton.click();
+});
+
+</script>
+<script>
+
+async function loadTasks() {
+  const list = document.getElementById("tasks-list");
+  const message = document.getElementById("tasks-message");
+
+  list.textContent = "Loading tasks...";
+  message.textContent = "";
+
+  try {
+    const response = await fetch("/api/tasks");
+    const data = await response.json();
+
+    if (!response.ok) throw new Error(data.message);
+
+    list.replaceChildren();
+
+    if (data.tasks.length === 0) {
+      list.textContent = "Abhi koi task available nahi.";
+      return;
+    }
+
+    data.tasks.forEach(task => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const title = document.createElement("h4");
+      title.textContent = task.title;
+
+      const description = document.createElement("p");
+      description.textContent = task.description;
+
+      const reward = document.createElement("p");
+      reward.textContent = "Demo reward: PKR " + task.reward_pkr;
+
+      const button = document.createElement("button");
+      button.textContent = task.completed
+        ? "Completed"
+        : "Mark Complete";
+      button.disabled = Boolean(task.completed);
+
+      button.addEventListener("click", async () => {
+        button.disabled = true;
+
+        try {
+          const result = await fetch(
+            "/api/tasks/" + task.id + "/complete",
+            { method: "POST" }
+          );
+          const body = await result.json();
+
+          if (!result.ok) throw new Error(body.message);
+
+          message.textContent = body.message;
+          await loadWallet();
+          await loadTasks();
+        } catch (error) {
+          message.textContent = error.message;
+          button.disabled = false;
+        }
+      });
+
+      card.append(title, description, reward, button);
+      list.appendChild(card);
+    });
+  } catch (error) {
+    list.textContent = "";
+    message.textContent = error.message ||
+      "Tasks load nahi ho sake.";
+  }
+}
+
+async function loadHistory() {
+  const list = document.getElementById("history-list");
+  const message = document.getElementById("history-message");
+
+  list.replaceChildren();
+  message.textContent = "Loading history...";
+
+  try {
+    const response = await fetch("/api/wallet/history", {
+      credentials: "same-origin"
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "History load nahi hui.");
+    }
+
+    if (data.transactions.length === 0) {
+      message.textContent = "Abhi koi transaction nahi hai.";
+      return;
+    }
+
+    data.transactions.forEach(item => {
+      const row = document.createElement("div");
+      row.className = "card";
+
+      const description = document.createElement("p");
+      description.textContent = item.description;
+
+      const amount = document.createElement("p");
+      amount.textContent = "+ PKR " + item.amount_pkr;
+
+      const date = document.createElement("small");
+      date.textContent = item.created_at;
+
+      row.append(description, amount, date);
+      list.appendChild(row);
+    });
+
+    message.textContent = "Demo transactions loaded.";
+  } catch (error) {
+    message.textContent = error.message;
+  }
+}
+
+document
+  .getElementById("refresh-history")
+  .addEventListener("click", loadHistory);
+
+
+</script>
+
+</body>
+</html>
