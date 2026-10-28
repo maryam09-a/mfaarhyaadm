@@ -1031,6 +1031,7 @@ const message = document.getElementById("auth-message");
 const loggedInUser = document.getElementById("logged-in-user");
 const logoutButton = document.getElementById("logout-button");
 
+
 async function apiRequest(url, data = {}, method = "POST") {
   const response = await fetch(url, {
     method,
@@ -1039,10 +1040,25 @@ async function apiRequest(url, data = {}, method = "POST") {
     ...(method !== "GET" ? { body: JSON.stringify(data) } : {})
   });
 
-  const result = await response.json();
-  if (!response.ok) throw new Error(result.message || "Request failed");
+  const text = await response.text();
+  let result;
+
+  try {
+    result = JSON.parse(text);
+  } catch {
+    console.error("API returned non-JSON:", url, response.status, text);
+    throw new Error(
+      "Server se JSON response nahi mila. Status: " + response.status
+    );
+  }
+
+  if (!response.ok) {
+    throw new Error(result.message || "Request failed");
+  }
+
   return result;
 }
+
 
 function showUser(user) {
   document.getElementById("auth-section").hidden = true;
