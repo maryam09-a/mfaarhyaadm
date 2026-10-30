@@ -790,62 +790,6 @@ app.get("/api/my-packages", (req, res) => {
 
 const crypto = require("crypto");
 
-app.post("/api/admin/setup", (req, res) => {
-  try {
-    const expectedKey = process.env.ADMIN_SETUP_KEY;
-    const providedKey = req.get("x-admin-setup-key") || "";
-    const email = String(req.body.email || "").trim().toLowerCase();
-
-    if (!expectedKey) {
-      return res.status(503).json({
-        error: "Admin setup key is not configured."
-      });
-    }
-
-    const expected = Buffer.from(expectedKey);
-    const provided = Buffer.from(providedKey);
-
-    if (
-      expected.length !== provided.length ||
-      !crypto.timingSafeEqual(expected, provided)
-    ) {
-      return res.status(403).json({
-        error: "Invalid setup key."
-      });
-    }
-
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return res.status(400).json({
-        error: "Valid account email is required."
-      });
-    }
-
-    const user = db.prepare(
-      "SELECT id, email, role FROM users WHERE lower(email) = lower(?)"
-    ).get(email);
-
-    if (!user) {
-      return res.status(404).json({
-        error: "Account not found. Sign up first."
-      });
-    }
-
-    db.prepare(
-      "UPDATE users SET role = 'admin' WHERE id = ?"
-    ).run(user.id);
-
-    return res.json({
-      success: true,
-      message: "Admin role assigned.",
-      email: user.email
-    });
-  } catch (error) {
-    console.error("Admin setup error:", error.message);
-    return res.status(500).json({
-      error: "Admin setup failed."
-    });
-  }
-});
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log("mfaarhyaadm running on port " + PORT);
