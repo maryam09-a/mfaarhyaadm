@@ -131,7 +131,7 @@ app.post("/api/login", (req, res) => {
      FROM users
      WHERE email = ?`
   ).get(email.trim().toLowerCase());
-  
+
    console.log("LOGIN DATABASE CHECK:", {
   userFound: !!user,
   totalUsers: db.prepare("SELECT COUNT(*) AS total FROM users").get().total
@@ -143,7 +143,13 @@ app.post("/api/login", (req, res) => {
   hashLength: user?.password_hash?.length
 });
 
-  if (!user || !bcrypt.compareSync(password, user.password_hash)) {
+  const passwordMatch = user
+  ? bcrypt.compareSync(password, user.password_hash)
+  : false;
+
+console.log("PASSWORD CHECK:", passwordMatch);
+
+if (!user || !passwordMatch) {
     return res.status(401).json({
       message: "Email ya password ghalat hai."
     });
