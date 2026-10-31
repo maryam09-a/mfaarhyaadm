@@ -131,7 +131,11 @@ app.post("/api/login", (req, res) => {
      FROM users
      WHERE email = ?`
   ).get(email.trim().toLowerCase());
-
+  
+   console.log("LOGIN DATABASE CHECK:", {
+  userFound: !!user,
+  totalUsers: db.prepare("SELECT COUNT(*) AS total FROM users").get().total
+});
   console.log("Login check:", {
   emailReceived: email.trim().toLowerCase(),
   userFound: !!user,
