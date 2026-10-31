@@ -89,7 +89,10 @@ app.post("/api/signup", (req, res) => {
     });
 
     const newUser = createUser();
-
+    console.log("SIGNUP SAVED USER:", {
+     id: newUser.id,
+     totalUsers: db.prepare("SELECT COUNT(*) AS total FROM users").get().total
+     });
     req.session.userId = newUser.id;
 
     res.status(201).json({
@@ -128,7 +131,7 @@ app.post("/api/login", (req, res) => {
      FROM users
      WHERE email = ?`
   ).get(email.trim().toLowerCase());
-  
+
   console.log("Login check:", {
   emailReceived: email.trim().toLowerCase(),
   userFound: !!user,
