@@ -236,5 +236,9 @@ if (packageCount === 0) {
 }
 
 console.log("Database connected successfully!");
+console.log(
+  "TOTAL USERS IN DATABASE:",
+  db.prepare("SELECT COUNT(*) AS total FROM users").get().total
+);
 
 module.exports = db;
