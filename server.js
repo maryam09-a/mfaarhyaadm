@@ -114,7 +114,6 @@ app.post("/api/signup", (req, res) => {
 });
 
 
-
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
 
@@ -129,6 +128,13 @@ app.post("/api/login", (req, res) => {
      FROM users
      WHERE email = ?`
   ).get(email.trim().toLowerCase());
+  
+  console.log("Login check:", {
+  emailReceived: email.trim().toLowerCase(),
+  userFound: !!user,
+  hashExists: !!user?.password_hash,
+  hashLength: user?.password_hash?.length
+});
 
   if (!user || !bcrypt.compareSync(password, user.password_hash)) {
     return res.status(401).json({
@@ -789,6 +795,35 @@ app.get("/api/my-packages", (req, res) => {
 });
 
 const crypto = require("crypto");
+// Secure Admin Database Backup
+app.get("/api/admin/backup", requireAdmin, async (req, res) => {
+  try {
+    const backupPath = path.join(
+      __dirname,
+      "data",
+      "mfaarhyaadm-backup.db"
+    );
+
+    await db.backup(backupPath);
+
+    res.download(
+      backupPath,
+      "mfaarhyaadm-backup.db",
+      (error) => {
+        if (error) {
+          console.error("Backup download error:", error.message);
+        }
+      }
+    );
+
+  } catch (error) {
+    console.error("Database backup error:", error.message);
+
+    res.status(500).json({
+      message: "Database backup failed."
+    });
+  }
+});
 
 
 app.listen(PORT, "0.0.0.0", () => {
